@@ -1,0 +1,31 @@
+#!/usr/bin/env bash
+# Copyright (C) 2014 Igor Kushnir <igorkuo AT Google mail>
+# License: GPL v3+ (http://www.gnu.org/copyleft/gpl.html)
+# generate_png_apps_big: uses inkscape to convert scalable/apps images to big
+# png images, which are placed to <size>x<size>/apps directory.
+# It is assumed that original images are square.
+# If some png file already exists, it is not generated and not overwritten.
+
+context="apps"
+source_dir="scalable/$context"
+for size in 256; do
+    dir=${size}x${size}
+    mkdir $dir
+    dir="$dir/$context"
+    mkdir $dir
+    for filename in $source_dir/*; do
+        if [[ -f "$filename" ]]; then
+            stem=$(basename "$filename")
+            if [[ "${stem::1}" == "." || "${stem: -1}" == "~" ]]; then
+                continue
+            fi
+
+            stem="${stem%.*}"
+            destination="$dir/${stem}.png"
+
+            if [ ! -f "$destination" ]; then
+                inkscape -z -e "$destination" -w $size -h $size "$filename"
+            fi
+        fi
+    done
+done

@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+set -x
+url="https://docs.google.com/uc?export=download&id=0B0F-aqLyFk_POU5ZUEJlb2VMSjA"
+filename=generated.tar.gz
+wget "$url" -O "$filename" || curl "$url" -L -o "$filename"
+tar -xzf "$filename" 16x16 22x22 24x24 32x32 48x48 96x96 256x256 README_generated
+rm "$filename"

@@ -1,0 +1,67 @@
+#!/usr/bin/env bash
+# Copyright (C) 2014 Igor Kushnir <igorkuo AT Google mail>
+# License: GPL v3+ (http://www.gnu.org/copyleft/gpl.html)
+# generate_png_small: uses inkscape to convert images from scalable directory to
+# png images, which are placed to corresponding size and context subdirectories.
+# If some png file already exists, it is not generated and not overwritten.
+
+
+# Brief: takes 4 parameters - names of floating-point variables: a0, b0, a1, b1
+# (a represents x, b represents y) OR (a represents y, b represents x).
+# 2 first parameters' initial values mean nothing, they are output parameters.
+# 2 last parameters are input and output parameters.
+# Fourth parameter's value must be not greater than third one's.
+# Sets a0 to 0; sets b0 and b1 in such a way that (a1-a0==b1-b0) &&
+# ((b1-b0)/2 == initial_b1/2).
+center24() {
+    local _greater _less _half
+    eval "_greater=\$$3"
+    eval "_less=\$$4"
+    eval "_half=$( awk 'BEGIN{ print ("'$_greater'"-"'$_less'")/2 }' )"
+
+    eval "$1=0"
+    eval "$2=-$_half"
+    # $3 is already set.
+    eval "$4=$( awk 'BEGIN{ print "'$_less'"+"'$_half'" }' )"
+}
+
+source_dir0="scalable/"
+command="inkscape -z"
+for size in 16 22 24 32 48 96; do
+    size_dir=${size}x${size}
+    mkdir $size_dir
+    for source_dir1 in $source_dir0*/; do
+        context=$(basename "$source_dir1")
+        if [ "${context::1}" == "." ]; then
+            continue
+        fi
+
+        dir="$size_dir/$context"
+        mkdir "$dir"
+        for filename in $source_dir1*; do
+            if [[ -f "$filename" ]]; then
+                stem=$(basename "$filename")
+                if [[ "${stem::1}" == "." || "${stem: -1}" == "~" ]]; then
+                    continue
+                fi
+
+                stem="${stem%.*}"
+                destination="$dir/${stem}.png"
+
+                if [ ! -f "$destination" ]; then
+                    x1=$($command -W "$filename")
+                    y1=$($command -H "$filename")
+                    x1_less=$(awk 'BEGIN{ print "'$x1'"<"'$y1'" }')
+                    if [ "$x1_less" -eq 1 ]; then
+                        center24 y0 x0 y1 x1
+                    else
+                        center24 x0 y0 x1 y1
+                    fi
+
+                    $command -e "$destination" -w $size -h $size \
+                                -a $x0:$y0:$x1:$y1 "$filename"
+                fi
+            fi
+        done
+    done
+done
