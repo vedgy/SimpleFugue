@@ -1,0 +1,52 @@
+#!/usr/bin/env bash
+# Copyright (C) 2014 Igor Kushnir <igorkuo AT Google mail>
+# License: GPL v3+ (http://www.gnu.org/copyleft/gpl.html)
+# generate_specified_png: uses inkscape to convert images from scalable
+# directory to png images, which are placed in corresponding size and context
+# subdirectories.
+# If some png file already exists, it is not generated and not overwritten.
+set -e
+# Script takes 1 parameter:
+images_file="$1" # File that contains list of icons to be converted.
+
+cd "$( dirname "${BASH_SOURCE[0]}" )"
+
+error_prefix="** (generate_specified_png): CRITICAL **: "
+icons_path=".."
+source_dir="$icons_path/scalable"
+small_sizes=(16 22 24 32 48)
+all_sizes=("${small_sizes[@]}" 96 256)
+while read line; do
+    if [[ -z "$line" ]]; then
+        continue
+    fi
+    context=$(dirname "$line")
+    if [[ "$context" == "apps" ]]; then
+        sizes="${all_sizes[@]}"
+    else
+        sizes="${small_sizes[@]}"
+    fi
+    for size in ${sizes[@]}; do
+        destination_dir="$icons_path/${size}x${size}/$context"
+        mkdir -p "$destination_dir"
+        exit_code=2
+        for filename in "$source_dir/$line"*; do
+            if [ ! -f "$filename" ]; then
+                continue
+            fi
+            exit_code=0
+            ./generate_png "$filename" "$size" "$destination_dir" || exit_code=$?
+            if [[ "$exit_code" == 0 ]]; then
+                break               # Done.
+            elif [[ "$exit_code" != 1 ]]; then
+                echo "$error_prefix $line - unexpected error!"
+                exit "$exit_code"
+            fi
+            # Wrong file, try another one.
+        done
+        if [[ "$exit_code" != 0 ]]; then
+            echo "$error_prefix $line - source file was not found!"
+            exit "$exit_code"
+        fi
+    done
+done < "$images_file"

@@ -8,12 +8,12 @@
 import os
 
 def is_normal(name):
-    return name[0] != '.'
+    return name[0] != '.' and name != "__pycache__"
 
 dirs = []
 
-for name in os.listdir('./'):
-    if is_normal(name) and os.path.isdir(name):
+for name in os.listdir("./"):
+    if is_normal(name) and name != "scripts" and os.path.isdir(name):
         context_list = os.listdir(name)
         for context in context_list:
             if is_normal(context):
@@ -67,6 +67,6 @@ with open("index.theme", "w") as f:
             f.write("Size=%s\n" % size.split("x")[0])
             f.write("Type=Fixed\n")
         else:
-            print('WARNING: unknown size "', size, '".')
+            sys.exit('ERROR: unknown size "', size, '".')
         f.write("Context=%s\n" % context_table[context])
-        f.write("\n")
+        f.write('\n')

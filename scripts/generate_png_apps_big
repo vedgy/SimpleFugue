@@ -1,0 +1,24 @@
+#!/usr/bin/env bash
+# Copyright (C) 2014 Igor Kushnir <igorkuo AT Google mail>
+# License: GPL v3+ (http://www.gnu.org/copyleft/gpl.html)
+# generate_png_apps_big: uses inkscape to convert scalable/apps images to big
+# png images, which are placed in <size>x<size>/apps directory.
+# If some png file already exists, it is not generated and not overwritten.
+set -e
+cd "$( dirname "${BASH_SOURCE[0]}" )"
+
+icons_path=".."
+context="apps"
+source_dir="$icons_path/scalable/$context"
+exit_code=0
+for size in 96 256; do
+    destination_dir="$icons_path/${size}x${size}/$context"
+    mkdir -p "$destination_dir"
+    for filename in "$source_dir"/*; do
+        ./generate_png "$filename" "$size" "$destination_dir" || exit_code=$?
+        if [[ "$exit_code" != 0 && "$exit_code" != 1 ]]; then
+            echo "** (generate_png_apps_big): CRITICAL **: $filename - unexpected error!"
+            exit "$exit_code"
+        fi
+    done
+done

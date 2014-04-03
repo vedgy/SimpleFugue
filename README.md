@@ -13,15 +13,19 @@ shell scripts can be used to get complete theme:
 * `generate_all_png` generates png icons locally from svg (requires inkscape).
 
 If both `README_generated` and `README.md` files are present in the root
-`SimpleFugue` directory, then this version of theme is (most likely) complete.
+`SimpleFugue` directory, then this version of theme is (most likely)
+complemented with some or all generated png icons.
 
 Apart from icons, SimpleFugue theme contains several convenience scripts:
 * `download_all_png` (Bash shell script) - downloads auto-generated icons.
-* `generate_png_small` and `generate_png_apps_big` (Bash shell scripts) -
-create png icons out of scalable icons using inkscape.
 * `generate-theme.py` (Python script) - creates index.theme, which references
 all icons available in SimpleFugue subdirectories.
-* `generate-qrc.py` (Python script) - universal script, which creates qrc file
+In scripts subdirectory:
+* `generate_png`, `generate_png_small`, `generate_png_apps_big`,
+`generate_specified_png` (Bash shell scripts) -
+create png icons out of scalable icons using inkscape.
+* `common_ending_generate_qrc.py`, `generate-qrc.py`, `generate-qrc-2.py`
+(Python scripts) - universal scripts which create qrc file
 with index.theme and specified icons.
 
 ## License

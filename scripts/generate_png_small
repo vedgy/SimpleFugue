@@ -1,0 +1,30 @@
+#!/usr/bin/env bash
+# Copyright (C) 2014 Igor Kushnir <igorkuo AT Google mail>
+# License: GPL v3+ (http://www.gnu.org/copyleft/gpl.html)
+# generate_png_small: uses inkscape to convert images from scalable directory to
+# png images, which are placed in corresponding size and context subdirectories.
+# If some png file already exists, it is not generated and not overwritten.
+set -e
+cd "$( dirname "${BASH_SOURCE[0]}" )"
+
+icons_path=".."
+source_dir0="$icons_path/scalable"
+exit_code=0
+for size in 16 22 24 32 48; do
+    for source_dir1 in "$source_dir0"/*/; do
+        context=$(basename "$source_dir1")
+        if [[ "$context" == "*" || "${context::1}" == "." ]]; then
+            continue
+        fi
+
+        destination_dir="$icons_path/${size}x${size}/$context"
+        mkdir -p "$destination_dir"
+        for filename in "$source_dir1"*; do
+            ./generate_png "$filename" "$size" "$destination_dir" || exit_code=$?
+            if [[ "$exit_code" != 0 && "$exit_code" != 1 ]]; then
+                echo "** (generate_png_small): CRITICAL **: $filename - unexpected error!"
+                exit "$exit_code"
+            fi
+        done
+    done
+done

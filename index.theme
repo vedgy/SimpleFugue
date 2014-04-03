@@ -5,7 +5,7 @@ Inherits=tango,hicolor
 
 Example=help-about
 
-Directories=22x22/categories,22x22/actions,22x22/places,22x22/apps,22x22/mimetypes,48x48/categories,48x48/actions,48x48/places,48x48/apps,48x48/mimetypes,32x32/categories,32x32/actions,32x32/places,32x32/apps,32x32/mimetypes,16x16/categories,16x16/actions,16x16/places,16x16/apps,16x16/mimetypes,256x256/apps,24x24/categories,24x24/actions,24x24/places,24x24/apps,24x24/mimetypes,96x96/categories,96x96/actions,96x96/places,96x96/apps,96x96/mimetypes,scalable/categories,scalable/actions,scalable/places,scalable/apps,scalable/mimetypes
+Directories=22x22/categories,22x22/actions,22x22/places,22x22/apps,22x22/mimetypes,48x48/categories,48x48/actions,48x48/places,48x48/apps,48x48/mimetypes,32x32/categories,32x32/actions,32x32/places,32x32/apps,32x32/mimetypes,16x16/categories,16x16/actions,16x16/places,16x16/apps,16x16/mimetypes,256x256/apps,24x24/categories,24x24/actions,24x24/places,24x24/apps,24x24/mimetypes,96x96/apps,scalable/categories,scalable/actions,scalable/places,scalable/apps,scalable/mimetypes
 
 [22x22/categories]
 Size=22
@@ -137,30 +137,10 @@ Size=24
 Type=Fixed
 Context=MimeTypes
 
-[96x96/categories]
-Size=96
-Type=Fixed
-Context=Categories
-
-[96x96/actions]
-Size=96
-Type=Fixed
-Context=Actions
-
-[96x96/places]
-Size=96
-Type=Fixed
-Context=Places
-
 [96x96/apps]
 Size=96
 Type=Fixed
 Context=Applications
-
-[96x96/mimetypes]
-Size=96
-Type=Fixed
-Context=MimeTypes
 
 [scalable/categories]
 Size=128
