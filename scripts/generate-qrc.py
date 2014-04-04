@@ -6,12 +6,11 @@
 
 import os, sys
 
-if len(sys.argv) < 5:
+if len(sys.argv) < 4:
     sys.exit("""\
 Not enough arguments!
 First argument must be a relative path to theme directory.
 Second argument must be a resulting filename.
-Third argument must be a qresource prefix.
 Then a nonempty list of icon names, which are to be included in qrc file, must \
 follow.
 """)
@@ -22,8 +21,7 @@ def is_normal(name):
 path_to_theme = sys.argv[1]
 dir_list = os.listdir(path_to_theme)
 filename = sys.argv[2]
-prefix = sys.argv[3]
-icon_names = [name for name in sys.argv[4:] if name]
+icon_names = [name for name in sys.argv[3:] if name]
 
 images = []
 
@@ -40,4 +38,4 @@ for name in dir_list:
 script_name = "generate-qrc.py"
 
 from common_ending_generate_qrc import end_generating_qrc
-end_generating_qrc(path_to_theme, filename, prefix, images, script_name)
+end_generating_qrc(path_to_theme, filename, images, script_name)
