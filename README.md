@@ -19,14 +19,14 @@ complemented with some or all generated png icons.
 Apart from icons, SimpleFugue theme contains several convenience scripts:
 * `download_all_png` (Bash shell script) - downloads auto-generated icons.
 * `generate-theme.py` (Python script) - creates index.theme, which references
-all icons available in SimpleFugue subdirectories.
-In scripts subdirectory:
+all icons available in `SimpleFugue` subdirectories.
+
+In `scripts` subdirectory:
 * `generate_png`, `generate_png_small`, `generate_png_apps_big`,
 `generate_specified_png` (Bash shell scripts) -
 create png icons out of scalable icons using inkscape.
 * `common_ending_generate_qrc.py`, `generate-qrc.py`, `generate-qrc-2.py`
-(Python scripts) - universal scripts which create qrc file
-with index.theme and specified icons.
+(Python scripts) - create qrc file with index.theme and specified icons.
 
 ## License
 
