@@ -2,7 +2,7 @@
 # Copyright (C) 2008 Patrick Niklaus <marex AT compiz-fusion DOT(.) org>
 # Copyright (C) 2014 Igor Kushnir <igorkuo AT Google mail>
 # License: GPL v3+ (http://www.gnu.org/copyleft/gpl.html)
-# generate-theme.py: creates SimpleFugue index.theme for icons available in
+# generate_theme.py: creates SimpleFugue index.theme for icons available in
 # subdirectories of current directory.
 
 import os

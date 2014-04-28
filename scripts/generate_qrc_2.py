@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # Copyright (C) 2014 Igor Kushnir <igorkuo AT Google mail>
 # License: GPL v3+ (http://www.gnu.org/copyleft/gpl.html)
-# generate-qrc-2.py: creates qrc file for the list of icons from file that is
+# generate_qrc_2.py: creates qrc file for the list of icons from file that is
 # specified as a command line argument.
 
 import os, sys
@@ -49,7 +49,7 @@ for d0 in dir_list0:
                         if os.path.isfile(path2) and is_valid_icon(f, names):
                             images.append(path2)
 
-script_name = "generate-qrc-2.py"
+script_name = "generate_qrc_2.py"
 
 from common_ending_generate_qrc import end_generating_qrc
 end_generating_qrc(path_to_theme, filename, images, script_name)

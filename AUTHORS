@@ -3,8 +3,8 @@ Complete list of Tango theme authors is available at
     http://tango.freedesktop.org/The_People
 
 Patrick Niklaus <marex AT compiz-fusion DOT(.) org> :
-    initial implementation of generate-theme.py script.
+    initial implementation of generate_theme.py script.
 
 Igor Kushnir <igorkuo AT Google mail> :
-    modifications of generate-theme.py;
+    modifications of generate_theme.py;
     all other scripts and icons except for those from Tango icon theme.

@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # Copyright (C) 2014 Igor Kushnir <igorkuo AT Google mail>
 # License: GPL v3+ (http://www.gnu.org/copyleft/gpl.html)
-# common-ending-generate-qrc.py: end of script for creating qrc file for icons.
+# common_ending_generate_qrc.py: end of script for creating qrc file for icons.
 
 import os
 
