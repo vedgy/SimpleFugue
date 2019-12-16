@@ -1,14 +1,21 @@
 #!/usr/bin/env bash
 set -e
 url=${1:-"https://docs.google.com/uc?export=download&id=0B0F-aqLyFk_PQWgzY1ZubDF0aDg"}
+checksum=${2:-"51a50952427a38b9a34bc73ec5cd705a5b374d1b"}
 echo "URL: $url"
+echo "Checksum: $checksum"
 filename="generated.tar.gz"
 wget "$url" -O "$filename" || curl "$url" -L -o "$filename"
-tar -xzf "$filename" 16x16 22x22 24x24 32x32 48x48 96x96 256x256 README_generated || echo "tar exit code = $?"
-minimum_size=300
-actual_size=$(du -b "$filename" | cut -f 1)
-rm "$filename"
-if [[ "$actual_size" -lt "$minimum_size" ]]; then
-    echo "** (download_all_png): CRITICAL **: $filename is too small ($actual_size bytes)!"
+
+computed_checksum=$(shasum -a 1 "$filename")
+echo "$computed_checksum"
+if [[ "$computed_checksum" != "$checksum  $filename" ]]; then
+    echo "** (download_all_png): CRITICAL **: downloaded archive checksum does not match. Aborting."
+    rm "$filename"
     exit 1
 fi
+echo "Checksum matches."
+
+tar -xzf "$filename" 16x16 22x22 24x24 32x32 48x48 96x96 256x256 README_generated || echo "tar exit code = $?"
+rm "$filename"
+echo "Downloaded and extracted images successfully."
